@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/windows">
+        <file>resource/windows/alive.png</file>
+    </qresource>
+</RCC>

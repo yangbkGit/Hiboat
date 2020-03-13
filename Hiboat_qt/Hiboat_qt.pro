@@ -43,3 +43,6 @@ LIBS += $$PWD/ffmpeg/lib/avcodec.lib \
         $$PWD/ffmpeg/lib/swresample.lib \
         $$PWD/ffmpeg/lib/swscale.lib
 
+RESOURCES += \
+    resource.qrc
+

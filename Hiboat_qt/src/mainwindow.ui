@@ -11,12 +11,57 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>HiBoat</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resource.qrc">
+    <normaloff>:/windows/resource/windows/alive.png</normaloff>:/windows/resource/windows/alive.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>媒体</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
+   <widget class="QMenu" name="menu11111">
+    <property name="title">
+     <string>信息</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu22222">
+    <property name="title">
+     <string>功能</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuAI">
+    <property name="title">
+     <string>AI</string>
+    </property>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu11111"/>
+   <addaction name="menu22222"/>
+   <addaction name="menuAI"/>
+  </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>打开本地文件</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
