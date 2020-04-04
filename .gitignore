@@ -1,3 +1,6 @@
 
-#qt project debug generated.
+# Ignore qt project debug generated.
 build-Hiboat_qt-*-Debug
+
+# Ignore 32bit/64bit support files
+Hiboat_qt/ffmpeg/
