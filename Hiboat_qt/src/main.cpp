@@ -1,22 +1,9 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <QDebug>
 
-#include <stdio.h>
-extern "C"
-{
-#include "libavcodec/avcodec.h"
-#include "libavformat/avformat.h"
-#include "libswscale/swscale.h"
-#include "libavutil/pixfmt.h"
-#include "libavutil/log.h"
-}
+#include "configs/global.h"
 
-/**
- * 错误提示字符串
- */
-#define ERR_STR_LEN 1024
-static char err_buf[ERR_STR_LEN];
+#include "functions/screenshot.h"
 
 /**
  * 用户自定义区
@@ -24,43 +11,9 @@ static char err_buf[ERR_STR_LEN];
 #define START_FRAME 200                 // 避免视频前面是黑的, 这有点坑人~
 const char *file_path = "possible.mkv"; // 视频文件的路径, 支持linux/windows格式.
 
-#define MYDEBUG  qDebug() <<"[FILE:" <<__FILE__ <<",FUNC:" <<__FUNCTION__ <<",LINE:" <<__LINE__ <<"] "
 
 
-void SaveFrame(AVFrame *pFrame, int width, int height,int index)
-{
-    FILE *pFile;
-    char szFilename[32];
-    int  x, y;
-    uint8_t *pTemp;
 
-    sprintf(szFilename, "debug/frame%d.ppm", index);
-    pFile=fopen(szFilename, "wb");
-
-    if(pFile == NULL)
-        return;
-
-    //写文件头, ppm格式: https://blog.csdn.net/MACMACip/article/details/105378600
-    fprintf(pFile, "P6 %d %d 255", width, height);
-
-    /**
-     * 写像素数据
-     * 使用for(y=0; y<height; y++){
-     *     fwrite(pFrame->data[0]+y*pFrame->linesize[0], 1, width*3, pFile);
-     * } 也可, 如果你的RGB排布刚好是正确的像素的话~
-     */
-    for(y=0; y<height; y++) {
-        pTemp = pFrame->data[0] + y*pFrame->linesize[0];
-        for(x=0; x<width; x++) {
-            fwrite(pTemp+2, 1, 1, pFile);
-            fwrite(pTemp+0, 1, 1, pFile);
-            fwrite(pTemp+1, 1, 1, pFile);
-            pTemp += 3;
-        }
-    }
-
-    fclose(pFile);
-}
 
 int main(int argc, char *argv[])
 {
@@ -83,7 +36,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    // 1. 查找视频文件;
+    // 1. 打开视频文件;
     ret = avformat_open_input(&pFormatCtx, file_path, NULL, NULL);
     if(ret < 0){
         av_strerror(ret, err_buf, ERR_STR_LEN);
@@ -152,7 +105,7 @@ int main(int argc, char *argv[])
                 pCodecCtx->pix_fmt, pCodecCtx->width, pCodecCtx->height,
                 AV_PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL);
 
-    // 8. pFrameRGB和out_buffer都是已经申请到的一段内存, 会将pFrameRGB的数据按RGB24格式自动"关联(转换并放置)"到out_buffer。
+    // 8. 根据指定的图像参数和提供的数组设置数据指针和行宽(linesizes).  https://blog.csdn.net/MACMACip/article/details/105463390
     numBytes = avpicture_get_size(AV_PIX_FMT_RGB24, pCodecCtx->width,pCodecCtx->height);
     out_buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
     ret = avpicture_fill((AVPicture *) pFrameRGB, out_buffer, AV_PIX_FMT_RGB24,
