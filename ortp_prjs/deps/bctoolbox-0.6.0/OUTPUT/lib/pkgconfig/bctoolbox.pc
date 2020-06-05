@@ -1,0 +1,10 @@
+# This is a comment
+prefix=/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT
+exec_prefix=/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT
+
+Name:  bctoolbox
+Description: A common set of tools used by Belledonne Communication's softwares
+Version: 0.5.1
+Libs: -L${exec_prefix}/lib -lbctoolbox
+Libs.private:  -L/home/m2n/Craftsman/ortp_prjs/deps/mbedtls/OUTPUT/lib -lmbedtls -lmbedcrypto -lmbedx509 
+Cflags: -I/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT/include

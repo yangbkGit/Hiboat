@@ -1,0 +1,9 @@
+# This is a comment
+prefix=/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT
+exec_prefix=/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT
+Name:  bctoolbox-tester
+Description: A common set of tester wrappers used by Belledonne Communications's softwares
+Requires.private: 
+Version: 0.5.1
+Libs: -L${exec_prefix}/lib -lbctoolbox-tester
+Cflags: -I/home/m2n/Craftsman/ortp_prjs/deps/bctoolbox-0.6.0/OUTPUT/include
