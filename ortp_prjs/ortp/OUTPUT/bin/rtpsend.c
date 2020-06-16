@@ -41,6 +41,12 @@
 int runcond=1;
 static uint32_t user_ts=0;
 
+// for sps/pps nalu
+#define SPS_SIZE 10
+#define PPS_SIZE 4
+static uint8_t sps[SPS_SIZE] = {0x67, 0x42, 0x00, 0x0a, 0xf8, 0x0f, 0x00, 0x44, 0xbe, 0x8};
+static uint8_t pps[PPS_SIZE] = {0x68, 0xce, 0x38, 0x80};
+
 void stophandler(int signum)
 {
 	runcond=0;
@@ -79,9 +85,14 @@ int process_packet2rtp(RtpSession *session, AVPacket *packet)
         if (nal_size > buf_end - buf || nal_size < 0)
             return -2;
 
+		if(unit_type == 5){
+			// for no sps/pps before I frame, todo
+			
+		}
+
 		if(nal_size <= MAX_RTP_PKT_LEN) {
 	        rtp_session_send_with_ts(session, buf, nal_size, user_ts);
-			
+
 	    } else if(nal_size > MAX_RTP_PKT_LEN){
 			int circle, remain, pos = 0;
 			buf -= 1;	// for FU-A indicator
@@ -113,7 +124,7 @@ int process_packet2rtp(RtpSession *session, AVPacket *packet)
 		}
 
 		user_ts += DefaultTimestampIncrement;
-		usleep(1000*1000);
+		usleep(30*1000);
 
 		// next_nal
         buf        += nal_size;
