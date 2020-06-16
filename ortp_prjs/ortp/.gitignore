@@ -7,7 +7,6 @@ Makefile.in
 missing
 ltmain.sh
 libtool
-Makefile
 .libs
 aclocal.m4
 config.guess
