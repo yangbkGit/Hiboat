@@ -4,18 +4,29 @@
 
 
 
-# 如何使我们的程序在你的电脑上跑起来.
+# 如何使我们的QT程序在你的电脑上跑起来.
 
 ## 1. 根据自己在QT中选择的构建套件位数选择Hiboat_qt/dependence文件夹中的win32或win64, 打开并解压其中的ffmpeg-4.2.2-win32-dev.zip. 按下图所放置
+若图片无法显示, 请自主打开Hiboat_qt/dependence/MarkDown/MinGW32bit.jpg
 
 ![image](Hiboat_qt/dependence/MarkDown/MinGW32bit.jpg)
 
 ### (我这里选择了ffmpeg-4.2.2-win64-dev.zip为例)
+若图片无法显示, 请自主打开Hiboat_qt/dependence/MarkDown/dev.jpg
 
 ![image](Hiboat_qt/dependence/MarkDown/dev.jpg)
 
 ## 2. 此时你编译(不运行)工程, 在build目录下放置我们运行程序时需要用到的东西.
+若图片无法显示, 请自主打开Hiboat_qt/dependence/MarkDown/dll.jpg
 
 ![image](Hiboat_qt/dependence/MarkDown/dll.jpg)
 
 ###恭喜你, 此时你已经可以成功运行整个QT工程了, 如果无法构建, 请提交ISSUES, 我们会尽快给你排查问题.
+
+
+
+# 如何使我们的rtp程序在你的电脑上跑起来.
+
+请参考: https://blog.csdn.net/MACMACip/article/details/106209984
+
+最后你运行程序的时候可能会出现找不到so库,请导出需要的so库到环境变量
