@@ -42,10 +42,23 @@ int runcond=1;
 static uint32_t user_ts=0;
 
 // for sps/pps nalu
+/**
+ *  18 
+ 	00 19 
+ 		67 64 00 1e ac d9 40 50 05 ba 10 00 00 03 00 10 00 00 03 03 20 f1 62 d9 60 
+	00 06
+		68 eb e1 32 c8 b0
+ */
 #define SPS_SIZE 10
 #define PPS_SIZE 4
 static uint8_t sps[SPS_SIZE] = {0x67, 0x42, 0x00, 0x0a, 0xf8, 0x0f, 0x00, 0x44, 0xbe, 0x8};
 static uint8_t pps[PPS_SIZE] = {0x68, 0xce, 0x38, 0x80};
+
+#define SPS_PPS_SIZE 36
+static uint8_t sps_pps[SPS_PPS_SIZE] = {0x18, 0x00, 0x19, 0x67, 0x64, 0x00, 0x1e, 0xac, 0xd9, 0x40, 0x50, 0x05, 0xba, 
+										0x10, 0x00, 0x00, 0x03, 0x00, 0x10, 0x00, 0x00, 0x03, 0x03, 0x20, 0xf1, 0x62, 
+										0xd9, 0x60, 0x00, 0x06, 0x68, 0xeb, 0xe1, 0x32, 0xc8, 0xb0};
+
 
 void stophandler(int signum)
 {
@@ -87,7 +100,7 @@ int process_packet2rtp(RtpSession *session, AVPacket *packet)
 
 		if(unit_type == 5){
 			// for no sps/pps before I frame, todo
-			
+			rtp_session_send_with_ts(session, sps_pps, SPS_PPS_SIZE, user_ts);
 		}
 
 		if(nal_size <= MAX_RTP_PKT_LEN) {
