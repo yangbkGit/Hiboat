@@ -138,7 +138,7 @@ int process_packet2rtp(RtpSession *session, AVPacket *packet)
 					break;
 				}
 
-				rtp_session_send_with_ts(session, &buf[pos], MAX_RTP_PKT_LEN+1, user_ts);
+				rtp_session_send_with_ts(session, &buf[pos], MAX_RTP_PKT_LEN+2, user_ts);
 				pos += MAX_RTP_PKT_LEN;
 			}
 			
